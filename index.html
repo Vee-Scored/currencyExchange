@@ -74,17 +74,7 @@
         </div>
 
         <ul id="lists">
-          <!-- <li
-            class="flex flex-col text-left text-slate-200 border rounded-md p-4 relative"
-          >
-            <span class="inline-block text-xs">Tax : <span>300</span></span>
-            <span class="inline-block ss relative text-xs"
-              >Total amount: <span>40300</span></span
-            >
-            <i
-              class="fa-solid cursor-pointer text-red-500 fa-square-xmark absolute right-2 top-0 bottom-0 my-auto h-6 text-2xl"
-            ></i>
-          </li> -->
+        
         </ul>
       </div>
     </section>
@@ -97,6 +87,11 @@
         let saveBtn = document.getElementById("saveBtn");
         let lists = document.getElementById("lists");
         let showResult = document.getElementById("showResult");
+        let lis = document.querySelectorAll('li.flex')
+
+        if (lists.innerHTML === "") {
+          saveBtn.classList.add('hidden')
+        }
 
         let result = {
           tax: 0,
@@ -114,7 +109,7 @@
             result.tax = finalVal;
             result.totalAmount = finalTotal;
 
-            showResult.innerHTML = finalVal;
+            showResult.innerHTML = "$ " + finalVal;
 
             saveBtn.classList.remove("hidden");
 
@@ -127,6 +122,8 @@
           } else {
             return;
           }
+
+
         });
 
         saveBtn.addEventListener("click", () => {
@@ -134,9 +131,9 @@
             lists.innerHTML += ` <li
             class="flex my-2 flex-col text-left text-slate-200 border rounded-md p-4 relative"
           >
-            <span class="inline-block text-xs">Tax : <span>${result.tax}</span></span>
+            <span class="inline-block text-xs">Tax : <span>$ ${result.tax}</span></span>
             <span class="inline-block ss relative text-xs"
-              >Total amount: <span>${result.totalAmount}</span></span
+              >Total amount: <span>$ ${result.totalAmount}</span></span
             >
             <i 
               class="fa-solid delete-icon cursor-pointer text-red-500 fa-square-xmark absolute right-2 top-0 bottom-0 my-auto h-6 text-2xl"
@@ -160,9 +157,14 @@
             const parentLi = event.target.parentElement;
             if (parentLi) {
               parentLi.remove();
+            
+
             }
           }
         });
+
+
+
       });
     </script>
   </body>
