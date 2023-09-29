@@ -112,7 +112,7 @@
             let finalTotal = finalVal + amountVal;
 
             result.tax = finalVal;
-            result.totalAmount = finalVal;
+            result.totalAmount = finalTotal;
 
             showResult.innerHTML = finalVal;
 
@@ -144,6 +144,7 @@
           </li>`;
 
             result.tax = 0;
+            showResult.innerHTML = ''
           } else {
             return;
           }
