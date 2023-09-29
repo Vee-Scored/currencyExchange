@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link href="./dist/output.css" rel="stylesheet" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .ss::before {
+        content: "(Tax-included)";
+        position: absolute;
+        bottom: -12px;
+        font-size: 9px;
+      }
+    </style>
+  </head>
+  <body class="bg-blue-950">
+    <section class="flex items-center justify-center min-h-screen">
+      <div
+        class="max-w-lg py-10 rounded-lg px-5 border border-slate-400 mx-auto text-center"
+      >
+        <h1 class="text-slate-300 font-semibold text-2xl mb-5">
+          Tax Calculation
+        </h1>
+
+        <div class="flex flex-col gap-2 my-3">
+          <input
+            id="taxInput"
+            class="p-2 rounded-sm outline-none text-slate-300 bg-slate-700"
+            placeholder="Type tax(%)"
+            type="number"
+          />
+          <span class="inline-block text-slate-300 text-lg font-semibold"
+            >% of</span
+          >
+          <input
+            id="amountInput"
+            placeholder="Your amount"
+            class="p-2 rounded-sm outline-none bg-slate-700 text-slate-300"
+            type="number"
+          />
+        </div>
+
+        <div class="flex gap-2">
+          <button
+            id="calBtn"
+            class="bg-[#0bbbcc] px-5 py-2 rounded-lg text-slate-700"
+          >
+            Calculate
+          </button>
+          <div
+            id="showResult"
+            class="border rounded-lg w-full text-slate-300 leading-10"
+          ></div>
+        </div>
+
+        <div>
+          <button
+            id="saveBtn"
+            class="bg-[#2f89fc] hidden w-full rounded-lg py-3 my-5 text-slate-100 text-sm font-semibold"
+          >
+            Save the result
+          </button>
+        </div>
+
+        <ul id="lists">
+          <!-- <li
+            class="flex flex-col text-left text-slate-200 border rounded-md p-4 relative"
+          >
+            <span class="inline-block text-xs">Tax : <span>300</span></span>
+            <span class="inline-block ss relative text-xs"
+              >Total amount: <span>40300</span></span
+            >
+            <i
+              class="fa-solid cursor-pointer text-red-500 fa-square-xmark absolute right-2 top-0 bottom-0 my-auto h-6 text-2xl"
+            ></i>
+          </li> -->
+        </ul>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let taxInput = document.getElementById("taxInput");
+        let amountInput = document.getElementById("amountInput");
+        let calBtn = document.getElementById("calBtn");
+        let saveBtn = document.getElementById("saveBtn");
+        let lists = document.getElementById("lists");
+        let showResult = document.getElementById("showResult");
+
+        let result = {
+          tax: 0,
+          totalAmount: 0,
+        };
+
+        calBtn.addEventListener("click", () => {
+          if (taxInput.value && amountInput.value) {
+            let taxVal = taxInput.valueAsNumber;
+            let amountVal = amountInput.valueAsNumber;
+
+            let finalVal = (taxVal / 100) * amountVal;
+            let finalTotal = finalVal + amountVal;
+
+            result.tax = finalVal;
+            result.totalAmount = finalVal;
+
+            showResult.innerHTML = finalVal;
+
+            saveBtn.classList.remove("hidden");
+
+           
+
+            taxInput.value = "";
+            amountInput.value = "";
+
+          
+          } else {
+            return;
+          }
+        });
+
+        saveBtn.addEventListener("click", () => {
+          if (result.tax) {
+            lists.innerHTML += ` <li
+            class="flex my-2 flex-col text-left text-slate-200 border rounded-md p-4 relative"
+          >
+            <span class="inline-block text-xs">Tax : <span>${result.tax}</span></span>
+            <span class="inline-block ss relative text-xs"
+              >Total amount: <span>${result.totalAmount}</span></span
+            >
+            <i 
+              class="fa-solid delete-icon cursor-pointer text-red-500 fa-square-xmark absolute right-2 top-0 bottom-0 my-auto h-6 text-2xl"
+            ></i>
+          </li>`;
+
+            result.tax = 0;
+          } else {
+            return;
+          }
+        });
+
+        // Get a reference to the common ancestor (the <ul>)
+
+        // Add a click event listener to the common ancestor
+        lists.addEventListener("click", function (event) {
+          // Check if the clicked element has the class "delete-icon"
+          if (event.target.classList.contains("delete-icon")) {
+            // If the clicked element is the icon, find and remove its parent <li>
+            const parentLi = event.target.parentElement;
+            if (parentLi) {
+              parentLi.remove();
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
