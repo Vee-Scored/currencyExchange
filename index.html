@@ -73,9 +73,7 @@
           </button>
         </div>
 
-        <ul id="lists">
-        
-        </ul>
+        <ul id="lists"></ul>
       </div>
     </section>
 
@@ -87,10 +85,10 @@
         let saveBtn = document.getElementById("saveBtn");
         let lists = document.getElementById("lists");
         let showResult = document.getElementById("showResult");
-        let lis = document.querySelectorAll('li.flex')
+        let lis = document.querySelectorAll("li.flex");
 
         if (lists.innerHTML === "") {
-          saveBtn.classList.add('hidden')
+          saveBtn.classList.add("hidden");
         }
 
         let result = {
@@ -113,17 +111,11 @@
 
             saveBtn.classList.remove("hidden");
 
-           
-
             taxInput.value = "";
             amountInput.value = "";
-
-          
           } else {
             return;
           }
-
-
         });
 
         saveBtn.addEventListener("click", () => {
@@ -141,7 +133,8 @@
           </li>`;
 
             result.tax = 0;
-            showResult.innerHTML = ''
+            showResult.innerHTML = "";
+            savebtn.classList.add("hidden");
           } else {
             return;
           }
@@ -157,14 +150,9 @@
             const parentLi = event.target.parentElement;
             if (parentLi) {
               parentLi.remove();
-            
-
             }
           }
         });
-
-
-
       });
     </script>
   </body>
