@@ -87,9 +87,7 @@
         let showResult = document.getElementById("showResult");
         let lis = document.querySelectorAll("li.flex");
 
-        if (lists.innerHTML === "") {
-          saveBtn.classList.add("hidden");
-        }
+       
 
         let result = {
           tax: 0,
@@ -134,7 +132,7 @@
 
             result.tax = 0;
             showResult.innerHTML = "";
-            savebtn.classList.add("hidden");
+            saveBtn.classList.add("hidden");
           } else {
             return;
           }
