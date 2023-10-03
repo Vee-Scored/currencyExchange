@@ -16,7 +16,7 @@
         font-family: "Poppins", sans-serif;
         box-sizing: border-box;
       }
-
+      
     </style>
   </head>
   <body >
@@ -29,7 +29,7 @@
         </h1>
         <div class="px-5">
           <div class="flex gap-2 h-11">
-            <input id="baseInput" class="text-xs text-right  basis-2/3 rounded-md outline-none px-3  w-full inline-block border border-2  border-primary placeholder-primary" type="number" placeholder="Amount">
+            <input id="baseInput" class="text-right  basis-2/3 px-2 rounded-md outline-none px-3  w-full inline-block border border-2  border-primary placeholder-primary" type="number" placeholder="Amount">
 
             <select class="text-sm outline-none  basis-1/3 rounded-md inline-block border border-2 px-3 py-1 border-[#0bbbcc] " name="baseCurrencies" id="baseCurrency">
               <option  value="usd">USD</option>
@@ -55,18 +55,18 @@
             </select>
           
           </div>
-<!--           
-          <div class="my-3 text-white">
-            <button id="cal" class="w-full bg-primary !text-white py-2 rounded-md text-sm font-semibold">CALCULATE</button>
-          </div> 
--->
+
 
           
           
-          <div class="my-3 text-white">
-            <button class="w-full bg-green-400 !text-white py-2 rounded-md text-sm font-semibold">add to lists</button>
+          <div class="my-3  text-white">
+            <button id="save" class="w-full hidden bg-green-400 !text-white py-2 rounded-md text-sm font-semibold">add to lists</button>
           </div>
 
+          <ul class="lists">
+           
+           
+          </ul>
           </div>
 
         </div>
@@ -89,8 +89,10 @@
         let baseSelection = document.getElementById("baseCurrency");
         let targetSelection = document.getElementById("targetCurrency");
         let baseInput = document.getElementById("baseInput");
-        let calBtn = document.getElementById("cal");
+        let saveBtn = document.getElementById("save");
+        let delBtn = document.getElementById("del");
         let resultAmount = document.getElementById("resultAmount");
+        let lists = document.querySelector('.lists')
 
         function calCurrency () {
           if (baseInput.value) {
@@ -154,6 +156,15 @@
         baseInput.addEventListener('keyup',()=> {
         
           calCurrency()
+
+         
+        if (resultAmount.innerText.length > 0 ) {
+          saveBtn.classList.remove('hidden')
+        } else {
+          saveBtn.classList.add('hidden')
+        }
+
+
         })
 
         baseSelection.addEventListener('change',()=>{
@@ -163,6 +174,39 @@
         targetSelection.addEventListener('change', ()=>{
           calCurrency()
         })
+
+        
+        //this variable is for updating the serial number of saved lists
+
+        let index = 1;
+
+        // save to list function
+
+        let saveToList = () => {
+          let baseVal = baseInput.valueAsNumber;
+          let resultVal = parseInt(resultAmount.innerText);
+          let baseCurrency = baseSelection.value.toUpperCase();
+          let targetCurrency = targetSelection.value.toUpperCase();
+         
+
+          lists.innerHTML += `
+         <li class="text-left px-2  my-2 py-2 border-b rounded-full border-b-primary"> <span class="mr-3 inline-block pl-3">${index}.</span> ${baseVal}  ${baseCurrency} = ${resultVal}
+              ${targetCurrency}</li>
+           `
+           index ++
+        }
+        
+        saveBtn.addEventListener('click',()=>{
+          if (baseInput.value) {
+            saveToList()
+          
+            
+          } else {
+            return
+          }
+        })
+
+
 
     </script>
   </body>
